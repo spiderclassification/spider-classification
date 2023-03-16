@@ -64,7 +64,7 @@ def main():
 
     vgg_model, spider_prediction_model = load_spider_models()
 
-    col1, col2, col3, col4, col5 = st.columns([0.15, 0.15, 0.15, 0.15, 1])
+    col1, col2, col3, col4 = st.columns(4)
 
     class_threshold = col1.number_input("Class Threshold %", 0, 100, 20, 1)
     family_threshold = col2.number_input("Family Threshold %", 0, 100, 20, 1)
