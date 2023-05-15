@@ -93,18 +93,18 @@ def list_models_in_folders(folder_paths):
             model_files.append(os.path.join(folder_path, file))
     return model_files
 
-# Add the folder paths containing the models
-hmc_dir = os.path.join(current_path, "model", "complete", "hierarchical-multilabel-classifier")
-hmc2_dir = os.path.join(current_path, "model", "complete", "hmc2")
-spider_not2_dir = os.path.join(current_path, "model", "complete", "spider-or-not2")
-spider_not3_dir = os.path.join(current_path, "model", "complete", "spider-or-not3")
-
-folder_paths_prediction = [hmc_dir, hmc2_dir]
-folder_paths_spider_or_not = [spider_not2_dir, spider_not3_dir]
-
-# Get a list of model paths from the folders
-model_files_prediction = list_models_in_folders(folder_paths_prediction)
-model_files_spider_or_not = list_models_in_folders(folder_paths_spider_or_not)
+# # Add the folder paths containing the models
+# hmc_dir = os.path.join(current_path, "model", "complete", "hierarchical-multilabel-classifier")
+# hmc2_dir = os.path.join(current_path, "model", "complete", "hmc2")
+# spider_not2_dir = os.path.join(current_path, "model", "complete", "spider-or-not2")
+# spider_not3_dir = os.path.join(current_path, "model", "complete", "spider-or-not3")
+#
+# folder_paths_prediction = [hmc_dir, hmc2_dir]
+# folder_paths_spider_or_not = [spider_not2_dir, spider_not3_dir]
+#
+# # Get a list of model paths from the folders
+# model_files_prediction = list_models_in_folders(folder_paths_prediction)
+# model_files_spider_or_not = list_models_in_folders(folder_paths_spider_or_not)
 
 def main():
     head_col = st.columns([1,8])
