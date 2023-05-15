@@ -38,7 +38,7 @@ data_directory = os.path.join(model_directory, "data")
 
 # spider_or_not_path = os.path.join(current_path, "model", "complete", "1spider-or-not","spider-or-not-10epoch-0.001lr_8.h5")
 spider_or_not_directory = os.path.join(current_path, "model", "complete", "spider-or-not3")
-spider_or_not_name = "spider-or-not3-300epoch-v6-trainalllayers_best_cp.h5"
+spider_or_not_name = "spider-or-not3-300epoch-v6_best_cp.h5"
 
 spider_or_not_path = os.path.join(spider_or_not_directory, spider_or_not_name)
 
