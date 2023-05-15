@@ -132,6 +132,8 @@ def main():
         if preview_image:
             st.image(img)
 
+    perform_step1 = st.checkbox("Perform Step 1 (spider-or-not)?")
+
     # selected_prediction_model = st.selectbox("Select Spider Prediction Model", model_files_prediction)
     # selected_spider_or_not_model = st.selectbox("Select Spider or Not Model", model_files_spider_or_not)
     #
@@ -170,7 +172,7 @@ def main():
         # 0 = not-spider
         # 1 = spider
 
-        if pred_label == 0:
+        if pred_label == 0 and perform_step1:
             # col5.error(f"Image is {spider_or_not_preds[0][0] * 100:.2f}% not a spider.")
             col5.error(f"Image is not a spider.")
         else:
