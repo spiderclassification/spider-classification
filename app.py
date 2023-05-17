@@ -106,6 +106,38 @@ def list_models_in_folders(folder_paths):
 # model_files_prediction = list_models_in_folders(folder_paths_prediction)
 # model_files_spider_or_not = list_models_in_folders(folder_paths_spider_or_not)
 
+# Function to load location data from an Excel file
+@st.cache
+def load_location_data():
+    location_data_path = os.path.join(current_path, "dataset", "location_data.xlsx")
+    location_data = pd.read_excel(location_data_path)
+    location_data.columns = location_data.columns.str.lower()  # Convert column names to lowercase
+    location_data.fillna("", inplace=True)
+    return location_data
+
+# Function to get locations from location data
+def get_locations(location_data):
+    return [location.capitalize() for location in location_data.columns.tolist()[4:]]  # Capitalize location names
+
+# Function to filter location based on the predicted spider classification
+def filter_location(location_data, predicted_category, category_name, selected_location):
+    # Clean the names in the 'species' column
+    location_data['species'] = location_data['species'].str.strip()
+    # Clean the 'category_name'
+    category_name = category_name.strip()
+
+    print(f"location_data: \n{location_data}\n predicted_category: \n {predicted_category} \n category_name:\n{category_name}")
+    location_data_filtered = location_data[location_data[predicted_category] == category_name]
+    print(f"location_data_filtered: \n {location_data_filtered}")
+    if location_data_filtered.empty:
+        print(f"No matching {predicted_category} for {category_name}")
+        return False
+    if selected_location in location_data_filtered.columns:
+        return location_data_filtered[selected_location].iloc[0] == 'x'
+    else:
+        return False
+
+
 def main():
     head_col = st.columns([1,8])
     with head_col[0]:
@@ -124,6 +156,7 @@ def main():
 
 #########################################
     uploaded_file = st.file_uploader('Upload Files', accept_multiple_files=False, type=['png', 'jpg', 'jpeg', 'webp'])
+
     img = ""
     preview_image = st.checkbox("Preview uploaded image?")
     if uploaded_file:
@@ -151,6 +184,12 @@ def main():
     threshold_values = [class_threshold, family_threshold, genus_threshold, species_threshold]
 
     # old_vs_new = st.checkbox("[DEV TEST] Compare New model with Old model?")
+
+    # Location Filter
+    location_data = load_location_data()
+    locations = get_locations(location_data)
+    selected_location = st.selectbox('Select the location where the spider image was taken:', locations)
+    selected_location = selected_location.lower()  # Convert to lowercase
 
     # button to run prediction
     identify_spider_btn = st.button("Identify Spider")
@@ -239,9 +278,15 @@ def main():
                     # Compare prediction confidence with threshold value
                     if belongs_in_accepted_higher_class:
                         if threshold_values[i] < (prediction_conf * 100):
-                            prediction_text += f" | {label_name} ({percent_conf}%)"
-                            if 3 > i:
-                                threshold_passer[i].append(f"{label_name}")
+                            # Check if predicted spider belongs to the selected location
+                            is_location_valid = filter_location(location_data, label.lower(), label_name, selected_location)
+                            if is_location_valid:
+                                prediction_text += f" | {label_name} ({percent_conf}%)"
+                                if 3 > i:
+                                    threshold_passer[i].append(f"{label_name}")
+                            else:
+                                prediction_text += f" | {label_name} ({percent_conf}%) not found in location."
+                                break
 
                         else:
                             # prediction_text += f" | No definite {label} (Highest confidence is {label_name}: {percent_conf}% / {threshold_values[i]}%)"
