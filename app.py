@@ -1,5 +1,3 @@
-# To run streamlit, go to terminal and type: 'streamlit run app.py'
-# Core Packages ###########################
 import os
 
 import streamlit as st
@@ -36,7 +34,6 @@ model_name = "hierarchical-multilabel-classifier-200epoch-VGG16_70.h5"
 model_path = os.path.join(model_directory, model_name)
 data_directory = os.path.join(model_directory, "data")
 
-# spider_or_not_path = os.path.join(current_path, "model", "complete", "1spider-or-not","spider-or-not-10epoch-0.001lr_8.h5")
 spider_or_not_directory = os.path.join(current_path, "model", "complete", "spider-or-not3")
 spider_or_not_name = "spider-or-not3-300epoch-v6_best_cp.h5"
 
@@ -92,19 +89,6 @@ def list_models_in_folders(folder_paths):
         for file in files:
             model_files.append(os.path.join(folder_path, file))
     return model_files
-
-# # Add the folder paths containing the models
-# hmc_dir = os.path.join(current_path, "model", "complete", "hierarchical-multilabel-classifier")
-# hmc2_dir = os.path.join(current_path, "model", "complete", "hmc2")
-# spider_not2_dir = os.path.join(current_path, "model", "complete", "spider-or-not2")
-# spider_not3_dir = os.path.join(current_path, "model", "complete", "spider-or-not3")
-#
-# folder_paths_prediction = [hmc_dir, hmc2_dir]
-# folder_paths_spider_or_not = [spider_not2_dir, spider_not3_dir]
-#
-# # Get a list of model paths from the folders
-# model_files_prediction = list_models_in_folders(folder_paths_prediction)
-# model_files_spider_or_not = list_models_in_folders(folder_paths_spider_or_not)
 
 # Function to load location data from an Excel file
 @st.cache
@@ -166,11 +150,6 @@ def main():
             st.image(img)
 
     perform_step1 = st.checkbox("Perform Step 1 (spider-or-not)?")
-
-    # selected_prediction_model = st.selectbox("Select Spider Prediction Model", model_files_prediction)
-    # selected_spider_or_not_model = st.selectbox("Select Spider or Not Model", model_files_spider_or_not)
-    #
-    # spider_prediction_model, spider_or_not_model = load_spider_models(selected_prediction_model, selected_spider_or_not_model)
 
     # Use default for now
     spider_prediction_model, spider_or_not_model = load_spider_models()
@@ -307,6 +286,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-# To run streamlit, go to terminal and type: 'streamlit run app-source.py'
-
