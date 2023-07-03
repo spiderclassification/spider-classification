@@ -41,7 +41,6 @@ spider_or_not_path = os.path.join(spider_or_not_directory, spider_or_not_name)
 
 #######################################################################################################################
 
-@st.cache(allow_output_mutation=True)
 def load_spider_models(spider_prediction_path = model_path, spider_not_path = spider_or_not_path):
     # vgg_model = VGG16(weights='imagenet')
     spider_prediction_model = load_model(spider_prediction_path)
@@ -90,8 +89,6 @@ def list_models_in_folders(folder_paths):
             model_files.append(os.path.join(folder_path, file))
     return model_files
 
-# Function to load location data from an Excel file
-@st.cache
 def load_location_data():
     location_data_path = os.path.join(current_path, "dataset", "location_data.xlsx")
     location_data = pd.read_excel(location_data_path)
